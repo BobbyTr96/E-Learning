@@ -35,14 +35,14 @@ const CourseDetail = () => {
           <div className="inner-banner">
             <div className="left-banner">
               <h1>{course?.tenKhoaHoc}</h1>
-              {/* <p>
+              <p>
                 Đánh giá khóa học :
                 <AiFillStar className="banner-icon" />
                 <AiFillStar className="banner-icon" />
                 <AiFillStar className="banner-icon" />
                 <AiFillStar className="banner-icon" />
                 <AiFillStar className="banner-icon" />{" "}
-              </p> */}
+              </p>
               <div className="banner-button">
                 <button
                   className="myButton"
