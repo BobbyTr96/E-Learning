@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 const CourseRegisted = () => {
   const [courses, setCourses] = useState([]); // state array khóa học đã đăng ký làm cột mốc để tìm kiếm
   const [searchCourse, setsearchCourse] = useState([]); // state array khóa học đã đăng ký để render ra giao diện
-const {user} = useSelector((state)=>state.AuthSlice) // redux user
+  const { user } = useSelector((state) => state.AuthSlice); // redux user
   //   paginate variable
   const [currentPage, setCurrentPage] = useState(1); // stata giá trị trang hiện tại của thanh pagination
   const itemPerPage = 2; // số lượng item mỗi trang
@@ -45,22 +45,22 @@ const {user} = useSelector((state)=>state.AuthSlice) // redux user
   };
 
   // hàm request API
-  const fetcher = async()=>{
-try {
-    // bóc tách danh sách khóa học đã đăng ký và thông tin user
-    const { chiTietKhoaHocGhiDanh, ...userInformation } =
-    await authAPI.getUserInformation();
-  // set state array
-  setCourses(chiTietKhoaHocGhiDanh);
-  setsearchCourse(chiTietKhoaHocGhiDanh);
-} catch (error) {
-  console.log(error);
-}
-  }
+  const fetcher = async () => {
+    try {
+      // bóc tách danh sách khóa học đã đăng ký và thông tin user
+      const { chiTietKhoaHocGhiDanh, ...userInformation } =
+        await authAPI.getUserInformation();
+      // set state array
+      setCourses(chiTietKhoaHocGhiDanh);
+      setsearchCourse(chiTietKhoaHocGhiDanh);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // useEffect
   useEffect(() => {
-    fetcher()
+    fetcher();
   }, []);
 
   const handleSubmit = (evt) => {
@@ -79,21 +79,30 @@ try {
   };
 
   // hàm hủy khóa học
-  const handleDeleteCourse = async (maKhoaHoc) => {
-    try {
-      const data = await courseAPI.deleteCourse({maKhoaHoc:maKhoaHoc,taiKhoan:user.taiKhoan});
-      swal({
-        text: "Hủy thành công",
-        icon: "success",
-        button: true,
-      });
-      // gọi lại hàm fetcher để cập nhật lại danh sách khóa học ng dùng
-    fetcher()
-
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDeleteCourse = (maKhoaHoc) => {
+    swal({
+      text: "Bạn muốn hủy đăng ký khóa học này",
+      icon: "warning",
+      buttons: ["Không muốn", "Đúng vậy"],
+    }).then(async (response) => {
+      if (response) {
+        try {
+          const data = await courseAPI.deleteCourse({
+            maKhoaHoc: maKhoaHoc,
+            taiKhoan: user.taiKhoan,
+          });
+          swal({
+            text: "Hủy thành công",
+            icon: "success",
+            button: true,
+          });
+          // gọi lại hàm fetcher để cập nhật lại danh sách khóa học ng dùng
+          fetcher();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
   };
 
   return (
