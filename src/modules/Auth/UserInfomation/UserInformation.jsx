@@ -4,22 +4,24 @@ import styled from "styled-components";
 // bootstrap
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-// material ui
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-//hook-form
-import { useForm } from "react-hook-form";
-// sweet alert
-import swal from "sweetalert";
-// axios
-import authAPI from "../../../services/authAPI";
 // redux
-import { useDispatch } from "react-redux";
-import { logIn } from "../../../slices/AuthSlice";
+import { useSelector } from "react-redux";
+// routes
+import { useNavigate } from "react-router-dom";
+
+// import components
 import User from "./User";
 import CourseRegisted from "./CourseRegisted";
 
 const UserInformation = () => {
+  const { user } = useSelector((state) => state.AuthSlice);
+  const navigate = useNavigate();
+
+  // hàm kiểm tra nếu ko có user thì back về trang đăng nhập
+  if (!user) {
+    navigate("/dangNhap",{replace:true});
+  }
+
   return (
     <StyleUserInfomation>
       <div className="container">

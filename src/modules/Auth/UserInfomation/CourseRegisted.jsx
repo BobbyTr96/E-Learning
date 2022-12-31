@@ -58,7 +58,7 @@ try {
 }
   }
 
-  // useEffe
+  // useEffect
   useEffect(() => {
     fetcher()
   }, []);
@@ -69,7 +69,7 @@ try {
     const searchValue = evt.target[0].value.toLowerCase();
     // dùng hàm filter lọc trong array courses
     const newCourses = courses.filter((item) => {
-      const newItem = item.tenKhoaHoc;
+      const newItem = item.tenKhoaHoc.toLowerCase();
       return newItem.includes(searchValue);
     });
     // set giá trị lọc được cho array searchCourse để re-render ra giao diện
