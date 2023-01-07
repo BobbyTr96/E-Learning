@@ -1,1 +1,1 @@
-tài khoản user : BobbyTr ; passwork: Quang@123
+tài khoản user : BobbyTr ; password: Quang@123
